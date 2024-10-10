@@ -32,7 +32,7 @@ class Dataset_LUNA16(Dataset):
     This class extends the base Dataset class and adds functionality specific to LUNA16, such as loading nodule annotations.
     """
     
-    def __init__(self, root_dir, config):
+    def __init__(self, root_dir, config, data_dir = 'raw'):
         super().__init__(config)
         """
         Initialize the LUNA16 dataset.
@@ -45,7 +45,7 @@ class Dataset_LUNA16(Dataset):
         self._data_list = []
         for sub_id in range(10):
             tag = f'subset{sub_id}'
-            for path in glob(os.path.join(root_dir, 'raw', tag, '*.mhd')):
+            for path in glob(os.path.join(root_dir, data_dir, tag, '*.mhd')):
                 name = path.split('/')[-1].replace('.mhd', '')
                 name = f'{tag}_{name}'
                 self._data_list.append({
@@ -54,7 +54,7 @@ class Dataset_LUNA16(Dataset):
                     'nodules': []
                 })
         
-        with open(os.path.join(root_dir, 'raw/annotations.csv'), 'r') as csvfile:
+        with open(os.path.join(root_dir, f'{data_dir}/annotations.csv'), 'r') as csvfile:
             reader = csv.reader(csvfile, delimiter=',')
             for i, row in enumerate(reader):
                 if i == 0:
