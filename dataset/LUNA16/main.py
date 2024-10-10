@@ -9,7 +9,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from dataset import Dataset_LUNA16
 from base.utils import sitk_save
-from base.projector import Projector
 from base.saver import Saver, PATH_DICT
 
 
@@ -85,9 +84,7 @@ if __name__ == '__main__':
         root_dir=root_dir,
         config=config['dataset'],
         data_dir= args.data_dir
-    ).return_nodule_mask(True).init_projector(
-        Projector(config=config['projector'])
-    )
+    ).return_nodule_mask(True)
     
     if args.name is not None:
         # Process a specific patient (useful for debugging)
